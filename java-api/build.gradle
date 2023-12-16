@@ -8,7 +8,8 @@ group = 'com.circle'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '21'
+	sourceCompatibility = '17'
+	targetCompatibility = '17'
 }
 
 configurations {
@@ -37,6 +38,10 @@ dependencies {
 	testImplementation 'org.testcontainers:mongodb'
 }
 
-tasks.named('test') {
+springBoot{
+	mainClass = 'com.circle.java.JavaApiApplication'
+}
+
+tasks.named("test") {
 	useJUnitPlatform()
 }

@@ -1,5 +1,5 @@
-# Use the official OpenJDK base image
-FROM amazoncorretto:21
+# Use the official AdoptOpenJDK base image
+FROM adoptopenjdk:21-jre-hotspot
 
 # Set the working directory inside the container
 WORKDIR /app

@@ -17,8 +17,3 @@ spring:
 # Server settings
 server:
   port: 8080
-
-# Logging settings
-logging:
-  level:
-    org.springframework: INFO
