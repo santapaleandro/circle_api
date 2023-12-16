@@ -1,0 +1,24 @@
+# Spring application settings
+spring:
+  application:
+    name: circle-api-java
+  data:
+    mongodb:
+      host: localhost # MongoDB server host
+      port: 27017     # MongoDB server port
+      database: mongo_db # Name of your MongoDB database
+  jpa:
+    hibernate:
+      ddl-auto: update # Set to "update" for development; "none" for production
+    show-sql: true # Set to true for development debugging
+  profiles:
+    active: default # Set active profile here
+
+# Server settings
+server:
+  port: 8080
+
+# Logging settings
+logging:
+  level:
+    org.springframework: INFO
