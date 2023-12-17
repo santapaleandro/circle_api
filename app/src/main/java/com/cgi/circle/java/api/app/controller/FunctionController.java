@@ -1,9 +1,9 @@
 package com.cgi.circle.java.api.app.controller;
 
-import com.cgi.circle.java.api.app.model.Circle;
-import com.cgi.circle.java.api.app.model.Point;
+import com.cgi.circle.java.api.app.dto.wrappers.PointCircleWrapper;
 import com.cgi.circle.java.api.app.service.FunctionService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,9 +16,9 @@ public class FunctionController {
         this.functionService = functionService;
     }
 
-    @GetMapping
-    public Boolean isInside(Point point, Circle circle){
-        return functionService.isInside(point, circle);
+    @GetMapping("/is_inside")
+    public Boolean isInside(@RequestBody PointCircleWrapper pointCircleWrapper){
+        return functionService.isInside(pointCircleWrapper.getPoint(), pointCircleWrapper.getCircle());
     }
 
 }

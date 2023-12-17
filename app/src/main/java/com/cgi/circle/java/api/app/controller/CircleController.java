@@ -22,7 +22,7 @@ public class CircleController {
     }
 
     @GetMapping("{id}")
-    public Optional<Circle> getById(String id) {
+    public Optional<Circle> getById(@RequestBody String id) {
         return circleService.getById(id);
     }
 
@@ -37,7 +37,7 @@ public class CircleController {
     }
 
     @DeleteMapping("{id}")
-    public void delete(String id) {
+    public void delete(@RequestBody String id) {
         circleService.delete(id);
     }
 

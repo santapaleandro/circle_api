@@ -22,22 +22,22 @@ public class PointController {
     }
 
     @GetMapping
-    public Optional<Point> getById(String id){
+    public Optional<Point> getById(@RequestBody String id){
         return pointService.getById(id);
     }
 
     @PostMapping
-    public void create(Point point){
+    public void create(@RequestBody Point point){
         pointService.create(point);
     }
 
     @PutMapping
-    public Point update(Point point){
+    public Point update(@RequestBody Point point){
         return pointService.update(point);
     }
 
     @DeleteMapping
-    public void delete(String id){
+    public void delete(@RequestBody String id){
         pointService.delete(id);
     }
 
