@@ -5,11 +5,11 @@ FROM amazoncorretto:17 as build
 WORKDIR /app
 
 # Copy the Gradle configuration files and source code into the container
-COPY ../../../gradlew /app/
-COPY ../../../gradle /app/gradle
-COPY ../../../build.gradle /app/
-COPY ../../../settings.gradle /app/
-COPY ../.. /app/src
+COPY gradlew /app/
+COPY gradle /app/gradle
+COPY build.gradle /app/
+COPY settings.gradle /app/
+COPY src /app/src
 
 # Grant execution permissions to the Gradle wrapper
 RUN chmod +x /app/gradlew
