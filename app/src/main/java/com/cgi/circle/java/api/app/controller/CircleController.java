@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -41,8 +42,15 @@ public class CircleController {
     @PostMapping
     @Operation(summary = "Create a new circle", description = "Create a new circle and add it to the database")
     @ApiResponse(responseCode = "201", description = "Circle created successfully")
-    public void create(Circle circle){
+    public void create(@RequestBody Circle circle){
         circleService.create(circle);
+    }
+
+    @PostMapping("all")
+    @Operation(summary = "Create new circles", description = "Create new circles and add them to the database")
+    @ApiResponse(responseCode = "201", description = "Circles created successfully")
+    public void createMultiple(@RequestBody List<Circle> circles){
+        circleService.createMultiple(circles);
     }
 
     @PutMapping
@@ -62,5 +70,13 @@ public class CircleController {
                        @RequestBody String id) {
         circleService.delete(id);
     }
+
+    @DeleteMapping("/all")
+    @Operation(summary = "Delete ALL circles", description = "Delete ALL circles from the database")
+    @ApiResponse(responseCode = "200", description = "ALL circles deleted successfully")
+    public void deleteAll() {
+        circleService.deleteAll();
+    }
+
 }
 

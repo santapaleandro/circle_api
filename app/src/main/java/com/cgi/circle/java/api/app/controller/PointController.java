@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -49,6 +50,13 @@ public class PointController {
         pointService.create(point);
     }
 
+    @PostMapping("all")
+    @Operation(summary = "Create new points", description = "Create new points and add them to the database")
+    @ApiResponse(responseCode = "201", description = "Points created successfully")
+    public void createMultiple(@RequestBody List<Point> points){
+        pointService.createMultiple(points);
+    }
+
     @PutMapping
     @Operation(summary = "Update a point", description = "Update an existing point's details")
     @ApiResponse(responseCode = "200", description = "Point updated successfully",
@@ -67,6 +75,13 @@ public class PointController {
     public void delete(@Parameter(description = "ID of the point to delete", required = true)
                            @RequestBody String id){
         pointService.delete(id);
+    }
+
+    @DeleteMapping("/all")
+    @Operation(summary = "Delete ALL points", description = "Delete ALL points from the database")
+    @ApiResponse(responseCode = "200", description = "ALL points deleted successfully")
+    public void deleteAll() {
+        pointService.deleteAll();
     }
 
 }

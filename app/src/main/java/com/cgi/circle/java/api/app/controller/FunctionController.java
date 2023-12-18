@@ -1,6 +1,8 @@
 package com.cgi.circle.java.api.app.controller;
 
+import com.cgi.circle.java.api.app.dto.PointIdCircleIdDTO;
 import com.cgi.circle.java.api.app.dto.wrappers.PointCircleWrapper;
+import com.cgi.circle.java.api.app.model.Circle;
 import com.cgi.circle.java.api.app.model.Point;
 import com.cgi.circle.java.api.app.service.FunctionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,10 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/func")
@@ -22,36 +21,69 @@ public class FunctionController {
         this.functionService = functionService;
     }
 
-    @GetMapping("/is_inside")
+    @PostMapping("/is_inside")
+    @Operation(summary = "Check if a point is inside a circle",
+            description = "Returns true if the specified point is inside the given circle")
+    @ApiResponse(responseCode = "200", description = "Successfully determined the point's position",
+            content = @Content(mediaType = "application/json",
+            schema = @Schema(implementation = Boolean.class)))
+    public Boolean isInside(@Parameter(description = "Wrapper object containing a point and a circle DTOs", required = true)
+                                @RequestBody PointCircleWrapper pointCircleWrapper){
+        return functionService.isInside(pointCircleWrapper.getPoint(), pointCircleWrapper.getCircle());
+    }
+
+    @PostMapping("/is_inside_by_id")
     @Operation(summary = "Check if a point is inside a circle",
             description = "Returns true if the specified point is inside the given circle")
     @ApiResponse(responseCode = "200", description = "Successfully determined the point's position",
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = Boolean.class)))
-    public Boolean isInside(@Parameter(description = "Wrapper object containing a point and a circle", required = true)
-                                @RequestBody PointCircleWrapper pointCircleWrapper){
-        return functionService.isInside(pointCircleWrapper.getPoint(), pointCircleWrapper.getCircle());
+    public Boolean isInside(@Parameter(description = "Wrapper object containing a point and a circle IDs", required = true)
+                            @RequestBody PointIdCircleIdDTO bothId){
+        return functionService.isInside(bothId.getPointId(), bothId.getCircleId());
     }
 
-    @GetMapping("/get_all_points_inside_circle")
+    @PostMapping("/get_all_points_inside_circle")
     @Operation(summary = "Get all points inside a circle",
             description = "Retrieves all points that are inside the specified circle")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved the points",
             content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Point.class)))
+            schema = @Schema(implementation = Point.class)))
     public Iterable<Point> getAllPointsInsideCircle(@Parameter(description = "ID of the circle", required = true)
                                                         @RequestBody String circleId){
         return functionService.findAllPointsInside(circleId);
     }
 
-    @GetMapping("/get_all_points_outside_circle")
+    @PostMapping("/get_all_points_outside_circle")
     @Operation(summary = "Get all points outside a circle",
             description = "Retrieves all points that are outside the specified circle")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved the points",
             content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Point.class)))
+            schema = @Schema(implementation = Point.class)))
     public Iterable<Point> getAllPointsOutsideCircle(@Parameter(description = "ID of the circle", required = true)
-                                                         @RequestBody String circleId){
+                                                     @RequestBody String circleId){
         return functionService.findAllPointsOutside(circleId);
+    }
+
+    @PostMapping("/all-circles-point-in")
+    @Operation(summary = "Get all circles containing a point",
+            description = "Retrieves all circles that contain the specified point")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved circles",
+            content = @Content(mediaType = "application/json",
+            schema = @Schema(implementation = Circle.class)))
+    public Iterable<Circle> getAllCirclesPointIn(@Parameter(description = "Point to check", required = true)
+                                                 @RequestBody Point point) {
+        return functionService.findAllCirclesPointIn(point);
+    }
+
+    @GetMapping("/all-circles-point-out")
+    @Operation(summary = "Get all circles not containing a point",
+            description = "Retrieves all circles that do not contain the specified point")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved circles",
+            content = @Content(mediaType = "application/json",
+            schema = @Schema(implementation = Circle.class)))
+    public Iterable<Circle> getAllCirclesPointOut(@Parameter(description = "Point to check", required = true)
+                                                  @RequestBody Point point) {
+        return functionService.findAllCirclesPointOut(point);
     }
 }

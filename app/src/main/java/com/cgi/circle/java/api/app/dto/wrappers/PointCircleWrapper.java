@@ -1,11 +1,11 @@
 package com.cgi.circle.java.api.app.dto.wrappers;
 
-import com.cgi.circle.java.api.app.model.Circle;
-import com.cgi.circle.java.api.app.model.Point;
+import com.cgi.circle.java.api.app.dto.NoIDCircleDTO;
+import com.cgi.circle.java.api.app.dto.NoIDPointDTO;
 import lombok.Data;
 
 @Data
 public class PointCircleWrapper {
-    private Point point;
-    private Circle circle;
+    private NoIDPointDTO point;
+    private NoIDCircleDTO circle;
 }

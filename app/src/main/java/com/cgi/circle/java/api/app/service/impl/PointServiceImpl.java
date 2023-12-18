@@ -5,6 +5,7 @@ import com.cgi.circle.java.api.app.repository.PointRepository;
 import com.cgi.circle.java.api.app.service.PointService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,6 +33,11 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
+    public void createMultiple(List<Point> pointList) {
+        pointRepository.saveAll(pointList);
+    }
+
+    @Override
     public Point update(Point point) {
         return pointRepository.save(point);
     }
@@ -39,5 +45,10 @@ public class PointServiceImpl implements PointService {
     @Override
     public void delete(String id) {
         pointRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        pointRepository.deleteAll();
     }
 }

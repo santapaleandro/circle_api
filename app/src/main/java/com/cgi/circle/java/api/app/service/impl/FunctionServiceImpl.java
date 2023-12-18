@@ -1,5 +1,8 @@
 package com.cgi.circle.java.api.app.service.impl;
 
+import com.cgi.circle.java.api.app.dto.NoIDCircleDTO;
+import com.cgi.circle.java.api.app.dto.NoIDPointDTO;
+import com.cgi.circle.java.api.app.exceptions.EntityNotFoundException;
 import com.cgi.circle.java.api.app.model.Circle;
 import com.cgi.circle.java.api.app.model.Point;
 import com.cgi.circle.java.api.app.repository.CircleRepository;
@@ -30,6 +33,27 @@ public class FunctionServiceImpl implements FunctionService {
     }
 
     @Override
+    public Boolean isInside(NoIDPointDTO point, NoIDCircleDTO circle) {
+
+        return null;
+    }
+
+    @Override
+    public Boolean isInside(String pointId, String circleId) {
+        Optional<Circle> circle = circleRepository.findById(circleId);
+        Optional<Point> point = pointRepository.findById(pointId);
+        if (point.isEmpty()) {
+            throw new EntityNotFoundException("Point not found with ID: " + pointId);
+        }
+
+        if (circle.isEmpty()) {
+            throw new EntityNotFoundException("Circle not found with ID: " + circleId);
+        }
+
+        return isInside(point.get(), circle.get());
+    }
+
+    @Override
     public Iterable<Point> findAllPointsInside(String circleId) {
         Iterable<Point> selected = pointRepository.findAll();
         Optional<Circle> circle = circleRepository.findById(circleId);
@@ -48,6 +72,20 @@ public class FunctionServiceImpl implements FunctionService {
                 .collect(Collectors.toSet());
         return pointRepository.findAll().stream()
                 .filter(point -> !inside.contains(point))
+                .toList();
+    }
+
+    @Override
+    public Iterable<Circle> findAllCirclesPointIn(Point point) {
+        return circleRepository.findAll().stream()
+                .filter(c -> isInside(point, c))
+                .toList();
+    }
+
+    @Override
+    public Iterable<Circle> findAllCirclesPointOut(Point point) {
+        return circleRepository.findAll().stream()
+                .filter(c -> !isInside(point, c))
                 .toList();
     }
 }
