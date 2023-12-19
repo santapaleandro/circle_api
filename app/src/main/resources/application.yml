@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: circle-java-api
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: mongo_db
+      uri: mongodb://root:secret@mongodb:27017/mongo_db
+  jpa:
+    hibernate:
+      ddl-auto: update # Set to "update" for development; "none" for production
+    show-sql: true # Set to true for development debugging
+  profiles:
+    active: default # Set active profile here
+
+server:
+  port: 8080
+
+springdoc:
+  swagger-ui:
+    path: "/swagger"
