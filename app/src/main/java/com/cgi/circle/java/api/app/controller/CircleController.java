@@ -1,5 +1,6 @@
 package com.cgi.circle.java.api.app.controller;
 
+import com.cgi.circle.java.api.app.exceptions.CircleRadiusTooLowException;
 import com.cgi.circle.java.api.app.model.Circle;
 import com.cgi.circle.java.api.app.service.CircleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -7,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,7 +43,7 @@ public class CircleController {
     @PostMapping
     @Operation(summary = "Create a new circle", description = "Create a new circle and add it to the database")
     @ApiResponse(responseCode = "201", description = "Circle created successfully")
-    public void create(@RequestBody Circle circle){
+    public void create(@RequestBody Circle circle) throws CircleRadiusTooLowException {
         circleService.create(circle);
     }
 
@@ -57,8 +59,11 @@ public class CircleController {
     @ApiResponse(responseCode = "200", description = "Circle updated successfully",
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = Circle.class)))
+    @ApiResponse(responseCode = "500", description = "Internal Server Error",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = CircleRadiusTooLowException.class)))
     public Circle update(@Parameter(description = "Updated circle object", required = true)
-                             @RequestBody Circle circle) {
+                         @Valid @RequestBody Circle circle) throws CircleRadiusTooLowException {
         return circleService.update(circle);
     }
 

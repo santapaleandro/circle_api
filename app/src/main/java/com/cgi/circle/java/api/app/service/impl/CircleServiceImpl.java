@@ -1,5 +1,6 @@
 package com.cgi.circle.java.api.app.service.impl;
 
+import com.cgi.circle.java.api.app.exceptions.CircleRadiusTooLowException;
 import com.cgi.circle.java.api.app.exceptions.EntityNotFoundException;
 import com.cgi.circle.java.api.app.model.Circle;
 import com.cgi.circle.java.api.app.repository.CircleRepository;
@@ -29,7 +30,10 @@ public class CircleServiceImpl implements CircleService {
     }
 
     @Override
-    public Circle update(Circle circle) {
+    public Circle update(Circle circle) throws CircleRadiusTooLowException {
+        if (circle.getRadius() < 0.001){
+            throw new CircleRadiusTooLowException("Circle radius is lower than 0.001");
+        }
         return circleRepository.save(circle);
     }
 
@@ -39,7 +43,10 @@ public class CircleServiceImpl implements CircleService {
     }
 
     @Override
-    public void create(Circle circle) {
+    public void create(Circle circle) throws CircleRadiusTooLowException {
+        if (circle.getRadius() < 0.001){
+            throw new CircleRadiusTooLowException("Circle radius is lower than 0.001");
+        }
         circleRepository.save(circle);
     }
 
