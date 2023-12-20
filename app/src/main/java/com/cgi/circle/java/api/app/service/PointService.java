@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface PointService {
     Iterable<Point> getAll();
-    Optional<Point> getById(String id);
+    Point getById(String id);
     void create(Point point);
     void createMultiple(List<Point> pointList);
     Point update(Point point);

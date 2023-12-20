@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/points")
@@ -37,8 +36,8 @@ public class PointController {
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = Point.class)))
     @ApiResponse(responseCode = "404", description = "Point not found")
-    public Optional<Point> getById(@Parameter(description = "ID of the point to retrieve", required = true)
-                                       @RequestBody String id){
+    public Point getById(@Parameter(description = "ID of the point to retrieve", required = true)
+                                       @RequestParam String id){
         return pointService.getById(id);
     }
 

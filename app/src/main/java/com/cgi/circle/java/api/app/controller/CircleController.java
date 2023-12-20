@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/circles")
@@ -35,7 +34,7 @@ public class CircleController {
     @ApiResponse(responseCode = "200", description = "Successfully retrieved the circle",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Circle.class)))
     @ApiResponse(responseCode = "404", description = "Circle not found")
-    public Optional<Circle> getById(@RequestBody String id) {
+    public Circle getById(@RequestParam String id) {
         return circleService.getById(id);
     }
 

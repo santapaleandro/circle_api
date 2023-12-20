@@ -15,12 +15,14 @@
 - API Testing: Steps to call the REST API and receive a boolean response indicating if the point is inside the circle.
 
 
-### Build
+#### Build
 - gradle clean build
+#### Run
+- gradle bootRun
 #### config 
 - application.yaml
 - docker-compose.yaml
 #### database
 - mongoDB
 #### swagger
-- enter threw localhost:8080/swagger
+- enter here: localhost:8080/swagger

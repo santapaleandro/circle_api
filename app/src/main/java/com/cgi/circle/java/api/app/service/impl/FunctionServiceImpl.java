@@ -53,8 +53,9 @@ public class FunctionServiceImpl implements FunctionService {
             return StreamSupport.stream(selected.spliterator(), false)
                     .filter(point -> isInside(point, circle1))
                     .toList();
+        } else {
+            throw new EntityNotFoundException("Circle not found with ID: + circleId");
         }
-        return null;
     }
 
     @Override

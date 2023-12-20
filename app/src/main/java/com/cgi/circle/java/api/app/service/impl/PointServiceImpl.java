@@ -1,12 +1,12 @@
 package com.cgi.circle.java.api.app.service.impl;
 
+import com.cgi.circle.java.api.app.exceptions.EntityNotFoundException;
 import com.cgi.circle.java.api.app.model.Point;
 import com.cgi.circle.java.api.app.repository.PointRepository;
 import com.cgi.circle.java.api.app.service.PointService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PointServiceImpl implements PointService {
@@ -23,8 +23,9 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public Optional<Point> getById(String id) {
-        return pointRepository.findById(id);
+    public Point getById(String id) {
+        return pointRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Point not found with id: " + id));
     }
 
     @Override
