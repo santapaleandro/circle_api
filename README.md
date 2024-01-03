@@ -1,5 +1,6 @@
 # Circle_API
 #### Author: Pawel Santarius
+#### status: awaiting ####
 
 ### Components
 - Point Entity: Represents a point in a 2D coordinate system.
